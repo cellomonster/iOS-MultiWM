@@ -1,0 +1,9 @@
+Package: com.trevir.arcticfox
+Name: Arctic Fox
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Windowed app system
+Maintainer: Trevir
+Author: Trevir
+Section: Tweaks
