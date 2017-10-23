@@ -1,6 +1,6 @@
 Package: com.trevir.arcticfox
 Name: Arctic Fox
-Depends: mobilesubstrate
+Depends: mobilesubstrate com.rpetrich.rocketbootstrap libactivator
 Version: 0.0.1
 Architecture: iphoneos-arm
 Description: Windowed app system
