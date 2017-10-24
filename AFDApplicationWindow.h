@@ -8,5 +8,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AFDApplicationWindow : UIView
--(AFDApplicationWindow*)init;
+@property (assign) NSString* applicationBundleId;
+-(AFDApplicationWindow*)initWithApplication:(NSString*)applicationBundleId;
+-(void)setWindowFrame:(CGRect)frame;
 @end

@@ -18,16 +18,13 @@ void resizeApplicationWindow(CFNotificationCenterRef center,
 														 CFStringRef name,
 														 const void *object,
 														 CFDictionaryRef userInfo){
+	NSString *applicationMessagingCenterName = [NSString stringWithFormat:@"%@ %@", @"trevir.arcticfox.xpm ", NSBundle.mainBundle.bundleIdentifier];
+	CPDistributedMessagingCenter *applicationMessagingCenter = [CPDistributedMessagingCenter centerNamed:applicationMessagingCenterName];
+	rocketbootstrap_distributedmessagingcenter_apply(applicationMessagingCenter);
 	
-	CPDistributedMessagingCenter *messagingCenter = [CPDistributedMessagingCenter centerNamed:@"trevir.arcticfox.xpm"];
-	rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
-	
-	NSDictionary *reply = [messagingCenter sendMessageAndReceiveReplyName:@"trevir.arcticfox.xpm resizeApplicationWindow" userInfo:nil];
-	
-	if([NSBundle.mainBundle.bundleIdentifier isEqualToString: [reply objectForKey:@"currentApplication"]]){
-			[UIApplication.sharedApplication.keyWindow setFrame:CGRectMake(0,0,[[reply valueForKey:@"width"] doubleValue],[[reply valueForKey:@"height"] doubleValue])];
-			[UIApplication.sharedApplication.statusBarWindow setFrame:CGRectMake(0,-100,0,0)];
-	}
+	NSDictionary *reply = [applicationMessagingCenter sendMessageAndReceiveReplyName:@"trevir.arcticfox.xpm resizeApplicationWindow" userInfo:nil];
+	[UIApplication.sharedApplication.keyWindow setFrame:CGRectMake(0,0,[[reply valueForKey:@"width"] doubleValue],[[reply valueForKey:@"height"] doubleValue])];
+	[UIApplication.sharedApplication.statusBarWindow setFrame:CGRectMake(0,-100,0,0)];
 }
 
 %hook UIApplication
@@ -43,10 +40,14 @@ void resizeApplicationWindow(CFNotificationCenterRef center,
 		[messagingCenter registerForMessageName:@"trevir.arcticfox.xpm resizeApplicationWindow" target:self selector:@selector(returnNewApplicationWindowSize:withUserInfo:)];
 		
 	}else{
+		
+		
+		const char *messageName = [[NSString stringWithFormat:@"%@ %@", @"trevir.arcticfox.xpn resizeApplicationWindow ", NSBundle.mainBundle.bundleIdentifier] UTF8String];
+		
 		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
 																		NULL,
 																		resizeApplicationWindow,
-																		CFSTR("trevir.arcticfox.xpn resizeApplicationWindow"),
+																		CFStringCreateWithCString(NULL, messageName, kCFStringEncodingMacRoman),
 																		NULL,
 																		CFNotificationSuspensionBehaviorDeliverImmediately);
 	}
@@ -57,9 +58,7 @@ void resizeApplicationWindow(CFNotificationCenterRef center,
 %new
 
 - (NSDictionary *)returnNewApplicationWindowSize:(NSString *)name withUserInfo:(NSDictionary *)userinfo {
-	SBApplication *frontApp = UIApplication.sharedApplication._accessibilityFrontMostApplication;
-	
-	return @{@"width":@600,@"height":@400,@"currentApplication":frontApp.displayIdentifier};
+	return @{@"width":@600,@"height":@400};
 }
 
 %end
