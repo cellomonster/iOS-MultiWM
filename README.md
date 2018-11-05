@@ -1,5 +1,5 @@
 
-# iOS-ArcticFox
+# iOS-MultiWM
 
 Currently, Dissident must be used to keep apps alive while they are displayed in windows
 
