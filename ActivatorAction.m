@@ -4,7 +4,6 @@
 //
 //  Created by Julian Triveri on 8/11/17.
 //
-
 #import <libactivator/libactivator.h>
 #import "ActivatorAction.h"
 #import "CDTContextHostProvider.h"

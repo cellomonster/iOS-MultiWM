@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:ActivatorAction.h">
+   </FileRef>
+   <FileRef
+      location = "group:ActivatorAction.m">
+   </FileRef>
+   <FileRef
+      location = "group:AFDApplicationWindow.h">
+   </FileRef>
+   <FileRef
+      location = "group:AFDApplicationWindow.m">
+   </FileRef>
+   <FileRef
+      location = "group:CDTContextHostProvider.h">
+   </FileRef>
+   <FileRef
+      location = "group:CDTContextHostProvider.mm">
+   </FileRef>
+   <FileRef
+      location = "group:Interfaces.h">
+   </FileRef>
+   <FileRef
+      location = "group:Tweak.xm">
+   </FileRef>
+   <FileRef
+      location = "group:UIView+draggable.h">
+   </FileRef>
+   <FileRef
+      location = "group:UIView+draggable.m">
+   </FileRef>
+   <FileRef
+      location = "group:Makefile">
+   </FileRef>
+   <FileRef
+      location = "group:Window.plist">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <FileRef
+      location = "group:control">
+   </FileRef>
+</Workspace>

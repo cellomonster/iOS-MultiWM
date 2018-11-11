@@ -6,8 +6,6 @@
 //  Copyright (c) 2016 Andrea Mazzini. All rights reserved.
 //
 
-@import UIKit;
-
 /**
  * @name UIView+draggable
  * Adds the ability to drag a UIView

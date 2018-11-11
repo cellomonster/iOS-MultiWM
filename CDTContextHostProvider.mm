@@ -28,9 +28,6 @@
 		return [_hostedApplications objectForKey:bundleIdentifier];
 	}
 
-	//let the app run in the background
-	[self enableBackgroundingForApplication:sbapplication];
-
 	//open it
 	[self launchSuspendedApplicationWithBundleID:[(SBApplication *)sbapplication bundleIdentifier]];
 
@@ -101,43 +98,18 @@
     return returnValue;
 }
 */
+
 - (UIView *)hostViewForApplicationWithBundleID:(NSString *)bundleID {
-
-	//get application reference
-	SBApplication *appToHost = [[NSClassFromString(@"SBApplicationController") sharedInstance] applicationWithBundleIdentifier:bundleID];
-
-	//return hostview
-	return [self hostViewForApplication:appToHost];
+    
+    //get application reference
+    SBApplication *appToHost = [[NSClassFromString(@"SBApplicationController") sharedInstance] applicationWithBundleIdentifier:bundleID];
+    
+    //return hostview
+    return [self hostViewForApplication:appToHost];
 }
 
 - (void)launchSuspendedApplicationWithBundleID:(NSString *)bundleID {
 	[[UIApplication sharedApplication] launchApplicationWithIdentifier:bundleID suspended:YES];
-}
-
-- (void)disableBackgroundingForApplication:(id)sbapplication {
-
-	//get scene settings
-	FBSMutableSceneSettings *sceneSettings = [self sceneSettingsForApplication:sbapplication];
-
-	//force backgrounding to YES
-	[sceneSettings setBackgrounded:YES];
-
-	//reapply new settings to scene
-	[[self FBSceneForApplication:sbapplication] _applyMutableSettings:sceneSettings withTransitionContext:nil completion:nil];
-
-}
-
-- (void)enableBackgroundingForApplication:(id)sbapplication {
-
-	//get scene settings
-	FBSMutableSceneSettings *sceneSettings = [self sceneSettingsForApplication:sbapplication];
-
-	//force backgrounding to NO
-	[sceneSettings setBackgrounded:NO];
-
-	//reapply new settings to scene
-	[[self FBSceneForApplication:sbapplication] _applyMutableSettings:sceneSettings withTransitionContext:nil completion:nil];
-
 }
 
 - (FBScene *)FBSceneForApplication:(id)sbapplication {
@@ -162,7 +134,6 @@
 
     SBApplication *appToForce = [[NSClassFromString(@"SBApplicationController") sharedInstance] applicationWithBundleIdentifier:bundleID];
     [self launchSuspendedApplicationWithBundleID:bundleID];
-    [self enableBackgroundingForApplication:appToForce];
     FBWindowContextHostManager *manager = [self contextManagerForApplication:appToForce];
     [manager enableHostingForRequester:bundleID priority:1];
 }
@@ -172,7 +143,6 @@
 	SBApplication *appToHost = [[NSClassFromString(@"SBApplicationController") sharedInstance] applicationWithBundleIdentifier:bundleID];
 	FBWindowContextHostManager *contextManager = [self contextManagerForApplication:appToHost];
 	[contextManager disableHostingForRequester:bundleID];
-    [self disableBackgroundingForApplication:appToHost];
 
     [_hostedApplications removeObjectForKey:bundleID];
 
@@ -203,20 +173,6 @@
         [transaction begin];
 	}
     
-}
-
-- (void)sendLandscapeRotationNotificationToBundleID:(NSString *)bundleID {
-
-	//notification is "identifierLamoRotate"
-	NSString *rotateNotification = [NSString stringWithFormat:@"%@LamoLandscapeRotate", bundleID];
-	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)rotateNotification, NULL, NULL, YES);
-}
-
-- (void)sendPortraitRotationNotificationToBundleID:(NSString *)bundleID {
-
-	//notification is "identifierLamoRotate"
-	NSString *rotateNotification = [NSString stringWithFormat:@"%@LamoPortraitRotate", bundleID];
-	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)rotateNotification, NULL, NULL, YES);
 }
 
 @end

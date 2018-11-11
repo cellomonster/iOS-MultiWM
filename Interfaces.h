@@ -106,6 +106,7 @@
 - (id)displayIdentifier;
 - (id)statusBar;
 - (void)setStatusBarHidden:(BOOL)arg1;
+- (void)setStatusBarOrientation:(long long)arg1 animation:(int)arg2 duration:(double)arg3 ;
 void receivedStatusBarChange(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo);
 void receivedLandscapeRotate();
 void receivedPortraitRotate();

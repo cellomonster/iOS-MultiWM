@@ -1,9 +1,10 @@
-//
-//  Tweak.xm
-//
-//
-//  Created by Julian Triveri on 8/11/17.
-//
+#line 1 "Tweak.xm"
+
+
+
+
+
+
 
 #include <notify.h>
 #import <libactivator/libactivator.h>
@@ -31,9 +32,34 @@ void resizeApplicationWindow(CFNotificationCenterRef center,
     [UIApplication.sharedApplication setStatusBarOrientation:1 animation:1 duration:0];
 }
 
-%hook UIApplication
--(id)init{
-	id toReturn = %orig;
+
+#include <substrate.h>
+#if defined(__clang__)
+#if __has_feature(objc_arc)
+#define _LOGOS_SELF_TYPE_NORMAL __unsafe_unretained
+#define _LOGOS_SELF_TYPE_INIT __attribute__((ns_consumed))
+#define _LOGOS_SELF_CONST const
+#define _LOGOS_RETURN_RETAINED __attribute__((ns_returns_retained))
+#else
+#define _LOGOS_SELF_TYPE_NORMAL
+#define _LOGOS_SELF_TYPE_INIT
+#define _LOGOS_SELF_CONST
+#define _LOGOS_RETURN_RETAINED
+#endif
+#else
+#define _LOGOS_SELF_TYPE_NORMAL
+#define _LOGOS_SELF_TYPE_INIT
+#define _LOGOS_SELF_CONST
+#define _LOGOS_RETURN_RETAINED
+#endif
+
+@class UIApplication; 
+static UIApplication* (*_logos_orig$_ungrouped$UIApplication$init)(_LOGOS_SELF_TYPE_INIT UIApplication*, SEL) _LOGOS_RETURN_RETAINED; static UIApplication* _logos_method$_ungrouped$UIApplication$init(_LOGOS_SELF_TYPE_INIT UIApplication*, SEL) _LOGOS_RETURN_RETAINED; 
+
+#line 34 "Tweak.xm"
+
+static UIApplication* _logos_method$_ungrouped$UIApplication$init(_LOGOS_SELF_TYPE_INIT UIApplication* __unused self, SEL __unused _cmd) _LOGOS_RETURN_RETAINED{
+	id toReturn = _logos_orig$_ungrouped$UIApplication$init(self, _cmd);
 	
 	if(IS_SPRINGBOARD){
 		[LAActivator.sharedInstance registerListener:[ActivatorAction new] forName:@"New Window"];
@@ -52,4 +78,7 @@ void resizeApplicationWindow(CFNotificationCenterRef center,
 	return toReturn;
 }
 
-%end
+
+static __attribute__((constructor)) void _logosLocalInit() {
+{Class _logos_class$_ungrouped$UIApplication = objc_getClass("UIApplication"); MSHookMessageEx(_logos_class$_ungrouped$UIApplication, @selector(init), (IMP)&_logos_method$_ungrouped$UIApplication$init, (IMP*)&_logos_orig$_ungrouped$UIApplication$init);} }
+#line 56 "Tweak.xm"

@@ -29,7 +29,6 @@
 	
 	[self setBackgroundColor:UIColor.whiteColor];
 	[self enableDragging];
-	[self setTransform:CGAffineTransformMakeScale(1, 1)];
 	[self.layer setCornerRadius:10];
 	[self.layer setShadowOffset:CGSizeMake(0, 5)];
 	[self.layer setShadowRadius:20];
@@ -37,9 +36,9 @@
 	
 	CDTContextHostProvider *contextProvider = CDTContextHostProvider.new;
 	self.contextView = [contextProvider hostViewForApplicationWithBundleID:applicationBundleId];
-	[self.contextView setTransform:CGAffineTransformMakeScale(1, 1)];
 	[self.contextView setFrame:CGRectMake(0,44,600,400)];
 	[self.contextView setClipsToBounds:true];
+    [self.contextView setBackgroundColor:[UIColor blackColor]];
 	
 	[self addSubview:self.contextView];
 	

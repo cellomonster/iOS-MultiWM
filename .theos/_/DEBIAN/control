@@ -1,0 +1,10 @@
+Package: com.trevir.arcticfox
+Name: Arctic Fox
+Depends: mobilesubstrate, com.rpetrich.rocketbootstrap, libactivator
+Architecture: iphoneos-arm
+Description: Windowed app system
+Maintainer: Trevir
+Author: Trevir
+Section: Tweaks
+Version: 0.0.1-7+debug
+Installed-Size: 184
